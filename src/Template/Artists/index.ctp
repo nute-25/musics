@@ -21,3 +21,8 @@ echo '</pre>'; */
         </tr>
     <?php endforeach; ?>
 </table>
+<?php
+    echo $this->Paginator->first('first');
+    echo $this->Paginator->numbers();
+    echo $this->Paginator->last('last');
+?>

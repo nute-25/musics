@@ -55,6 +55,29 @@ echo '</pre>'; */
 
 <p>id #<?= $artist->id ?></p>
 
+<p>
+    <span class="label">Liste de ses albums :</span>
+    <?php if(empty($artist->albums))
+        echo '<p>Il n\'y a pas d\'albums disponibles pour cet artiste</p>';
+    else { ?>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Date de sortie</th>
+                <th>Genre</th>
+                <th>Spotify</th>
+            </tr>
+            <?php foreach($artist->albums as $key => $value) : ?>
+                <tr>
+                    <td><?= $this->Html->link($value->title, ['controller' => 'albums', 'action' => 'view', $value->id]) ?></td>
+                    <td><?= $value->releaseyear ?></td>
+                    <td><?= $value->style ?></td>
+                    <td><a href='<?= $value->spotify ?>'>--> voir</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php } ?>
+</p>
 
 <p><?= $this->HTML->link('Editer', ['action' => 'edit', $artist->id]) ?></p>
 <?= $this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artist ?']); ?>
