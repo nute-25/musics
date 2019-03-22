@@ -15,7 +15,7 @@ echo '</pre>'; */
     </tr>
     <?php foreach($artists as $key => $uneLigne) : ?>
         <tr>
-            <td><?= $uneLigne->pseudonym ?></td>
+            <td><?= $this->Html->link($uneLigne->pseudonym, ['action' => 'view', $uneLigne->id]) ?></td>
             <td><?= $uneLigne->debut ?></td>
             <td><a href='<?= $uneLigne->spotify ?>'>--> voir</a></td>
         </tr>
