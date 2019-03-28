@@ -14,7 +14,7 @@ class PictureBehavior extends Behavior {
         'field' => 'picture'
     ];
 
-    //fonction qui sera appeler à chaque fois que l'on utilisera la méthode ->delete sur un enregistrement movie
+    //fonction qui sera appeler à chaque fois que l'on utilisera la méthode ->delete sur un enregistrement artist
     //entity l'objet qu'on va supprimer en base
     public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options) {
 

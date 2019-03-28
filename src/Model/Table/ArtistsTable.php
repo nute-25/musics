@@ -28,7 +28,7 @@ class ArtistsTable extends Table {
     }
 
     // ennonce les règles de validation pour ce type de data
-    // on surchage la methode validationDefault existant déjà dans la class Table dont MoviesTable hérite
+    // on surchage la methode validationDefault existant déjà dans la class Table dont ArtistsTable hérite
     public function validationDefault(Validator $v) {
         $v->notEmpty('pseudonym')
             ->maxLength('pseudonym', 100)

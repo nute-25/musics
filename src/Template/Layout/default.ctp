@@ -24,6 +24,18 @@ $cakeDescription = 'Plateforme de musiques';
         <h1><?= $this->Html->link('Musics !', ['controller' => 'artists', 'action' => 'index']) ?></h1>
         <nav>
             <?= $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']) ?>
+            <?= $this->Html->link('Liste des utilisateurs', ['controller' => 'users', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'index') ? 'active' : '']) ?>
+            <?php   // si l'utilisateur est non connecté
+                if($auth->user() === NULL) {
+                    echo $this->Html->link('Se connecter', ['controller' => 'users', 'action' => 'login'], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'login') ? 'active' : '']);
+                    echo $this->Html->link('Créer un compte utilisateur', ['controller' => 'users', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'add') ? 'active' : '']);
+                }
+            ?>
+            <?php   // si l'utilisateur est connecté
+                if($auth->user() !== NULL) {
+                    echo $this->Html->link('Se deconnecter', ['controller' => 'users', 'action' => 'logout']);
+                }
+            ?>
         </nav>
     </header>
     <main>

@@ -14,7 +14,7 @@ class CoverBehavior extends Behavior {
         'field' => 'cover'
     ];
 
-    //fonction qui sera appeler à chaque fois que l'on utilisera la méthode ->delete sur un enregistrement movie
+    //fonction qui sera appeler à chaque fois que l'on utilisera la méthode ->delete sur un enregistrement album
     //entity l'objet qu'on va supprimer en base
     public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options) {
 
