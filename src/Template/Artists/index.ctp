@@ -2,10 +2,18 @@
 /* echo '<pre>';
 var_dump($artists, count($artists));
 echo '</pre>'; */
+
+/* echo '<pre>';
+var_dump($auth->user('status'));
+echo '</pre>'; */
 ?>
 
 <p>Il y a <?= $artists->count() ?> artiste(s)</p>
-<p><?= $this->HTML->link('Ajouter un artiste', ['action' => 'add']) ?></p>
+<p><?php
+    if($auth->user('status') === 'admin') {
+        echo $this->HTML->link('Ajouter un artiste', ['action' => 'add']);
+    }
+?></p>
 
 <table>
     <tr>

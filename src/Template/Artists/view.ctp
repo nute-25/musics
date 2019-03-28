@@ -77,7 +77,13 @@ echo '</pre>'; */
             <?php endforeach; ?>
         </table>
     <?php } ?>
-    <p><?= $this->HTML->link('Ajouter un album', ['controller' => 'albums', 'action' => 'add', $artist->id]) ?></p>
+    <p>
+        <?php
+            if($auth->user('status') === 'admin') {
+                echo $this->HTML->link('Ajouter un album', ['controller' => 'albums', 'action' => 'add', $artist->id]);
+            }
+        ?>
+    </p>
 </p>
 
 <p><?= $this->HTML->link('Editer', ['action' => 'edit', $artist->id]) ?></p>

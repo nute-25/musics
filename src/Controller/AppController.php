@@ -67,7 +67,7 @@ class AppController extends Controller
         ]);
 
         // liste des actions visibles sans être connecté
-        $this->Auth->allow(['display', 'index', 'view', 'random']);
+        $this->Auth->allow(['display', 'index', 'view'/* , 'random' */]);
 
         /*
          * Enable the following component for recommended CakePHP security settings.
