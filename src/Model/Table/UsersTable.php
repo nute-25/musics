@@ -13,8 +13,15 @@ class UsersTable extends Table {
         // addBehavior fait le lien avec timestamp existant déjà dans cake
         $this->addBehavior('Timestamp');
 
+        // un user peut avoir plusieurs favoris (liés par user_id)
+        $this->hasMany('Bookmarks', [
+            'foreignKey' => 'user_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true
+        ]);
+
         // un user peut avoir plusieurs demandes (liés par user_id)
-        $this->hasMany('Albums', [
+        $this->hasMany('Requests', [
             'foreignKey' => 'user_id',
             'dependent' => true,
             'cascadeCallbacks' => true
