@@ -64,5 +64,27 @@ class AlbumsController extends AppController {
         $this->set(compact('new'));
     }
 
+    public function delete($id) {
+
+        if ($this->request->is(['post', 'delete'])) {
+            // on récupère l'élément ciblé
+            $album = $this->Albums->get($id);
+
+            // on stocke l'id de l'artiste dans une variable
+            $artist_id = $album->artist_id;
+            
+            if ($this->Albums->delete($album)) {
+                $this->Flash->success('Supprimé');
+                return $this->redirect(['controller' => 'artists', 'action' => 'view', $artist_id]);
+            } else {
+                $this->Flash->error('Suppression plantée');
+                // redirige vers la page de cet album
+                return $this->redirect(['action' => 'view', $id]);
+            }
+        } else { // sinon on déclenche une erreur 400 parsonnalisée
+            throw new NotFoundException('Méthode interdite (c\'est pas beau de tricher)');
+        }
+        
+    }
 
 }

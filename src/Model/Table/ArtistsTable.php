@@ -11,7 +11,7 @@ class ArtistsTable extends Table {
         // demande à Cake de gérer les created et modified
         // addBehavior fait le lien avec timestamp existant déjà dans cake
         $this->addBehavior('Timestamp');
-        $this->addBehavior('Image');
+        $this->addBehavior('Picture');
 
         // un artiste peut avoir plusieurs albums (liés par artist_id)
         $this->hasMany('Albums', [

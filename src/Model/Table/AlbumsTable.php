@@ -11,6 +11,7 @@ class AlbumsTable extends Table {
         // demande à Cake de gérer les created et modified
         // addBehavior fait le lien avec timestamp existant déjà dans cake
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Cover');
 
         // un album appartient à un artiste (ils sont liés par la colonne artist_id)
         $this->belongsTo('Artists', [

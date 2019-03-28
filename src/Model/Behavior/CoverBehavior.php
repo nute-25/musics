@@ -1,5 +1,4 @@
 <?php
-// src/Model/Behavior/ImageBehavior.php
 
 namespace App\Model\Behavior;
 
@@ -9,10 +8,10 @@ use Cake\Event\Event;
 use Cake\Datasource\EntityInterface;
 use ArrayObject;
 
-class ImageBehavior extends Behavior {
+class CoverBehavior extends Behavior {
     //indique sur quelle colonne on travaille
     protected $_defaultConfig = [
-        'field' => 'picture'
+        'field' => 'cover'
     ];
 
     //fonction qui sera appeler à chaque fois que l'on utilisera la méthode ->delete sur un enregistrement movie
@@ -20,10 +19,10 @@ class ImageBehavior extends Behavior {
     public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options) {
 
         // on recré le chemin vers le fichier
-        $address = WWW_ROOT.'/data/posters/'.$entity->picture;
+        $address = WWW_ROOT.'/data/covers/'.$entity->cover;
 
         //si le nom de fichier n'est pas vide et que le fichier existe
-        if (!empty($entity->picture) && file_exists($address)) {
+        if (!empty($entity->cover) && file_exists($address)) {
             // supprime le fichier en local
             unlink($address);
         }

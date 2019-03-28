@@ -88,4 +88,24 @@ class ArtistsController extends AppController {
         //envoie la variable à la vue
         $this->set(compact('new'));
     }
+
+    public function delete($id) {
+
+        if ($this->request->is(['post', 'delete'])) {
+            // on récupère l'élément ciblé
+            $artist = $this->Artists->get($id);
+
+            if ($this->Artists->delete($artist)) {
+                $this->Flash->success('Supprimé');
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('Suppression plantée');
+                // redirige vers la page de cet artiste
+                return $this->redirect(['action' => 'view', $id]);
+            }
+        } else { // sinon on déclenche une erreur 400 parsonnalisée
+            throw new NotFoundException('Méthode interdite (c\'est pas beau de tricher)');
+        }
+        
+    }
 }

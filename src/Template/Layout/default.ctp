@@ -22,6 +22,9 @@ $cakeDescription = 'Plateforme de musiques';
 <body>
     <header>
         <h1><?= $this->Html->link('Musics !', ['controller' => 'artists', 'action' => 'index']) ?></h1>
+        <nav>
+            <?= $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']) ?>
+        </nav>
     </header>
     <main>
        
