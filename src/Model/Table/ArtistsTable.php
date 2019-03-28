@@ -15,11 +15,15 @@ class ArtistsTable extends Table {
 
         // un artiste peut avoir plusieurs albums (liés par artist_id)
         $this->hasMany('Albums', [
-            'foreignKey' => 'artist_id'
+            'foreignKey' => 'artist_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
         // un artiste peut être plusieurs fois favoris (liés par artist_id)
         $this->hasMany('Bookmarks', [
-            'foreignKey' => 'artist_id'
+            'foreignKey' => 'artist_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
     }
 
