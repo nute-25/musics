@@ -108,4 +108,37 @@ class ArtistsController extends AppController {
         }
         
     }
+
+    public function deleteImage($id) {
+
+        if ($this->request->is('post')) {
+            $artist = $this->Artists->get($id);
+            $picture = $artist->picture;
+
+            // suppresion de l'ancien picture
+            // on recré le chemin vers le fichier
+            $old_address = WWW_ROOT.'/data/pictures/'.$picture;
+            //si le nom de fichier n'est pas vide et que le fichier existe
+            if (!empty($picture) && file_exists($old_address)) {
+                // supprime le fichier en local
+                unlink($old_address);
+            }
+
+            $artist->picture = null;
+
+            if($this->Artists->save($artist)) {
+                $this->Flash->success('Image d\'artiste supprimé');
+                // redirige vers la page de cette citation
+                return $this->redirect(['action' => 'view', $artist->id]);
+            } 
+            else {
+                $this->Flash->error('Suppression plantée');
+                // redirige vers la page de cette citation
+                return $this->redirect(['action' => 'view', $artist->id]);
+            }
+        } else { // sinon on déclenche une erreur 400 parsonnalisée
+            throw new NotFoundException('Access denied, try again)');
+        }
+
+    }
 }

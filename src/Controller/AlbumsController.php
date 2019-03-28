@@ -87,4 +87,37 @@ class AlbumsController extends AppController {
         
     }
 
+    public function deleteImage($id) {
+
+        if ($this->request->is('post')) {
+            $album = $this->Albums->get($id);
+            $cover = $album->cover;
+
+            // suppresion de l'ancien cover
+            // on recré le chemin vers le fichier
+            $old_address = WWW_ROOT.'/data/covers/'.$cover;
+            //si le nom de fichier n'est pas vide et que le fichier existe
+            if (!empty($cover) && file_exists($old_address)) {
+                // supprime le fichier en local
+                unlink($old_address);
+            }
+
+            $album->cover = null;
+
+            if($this->Albums->save($album)) {
+                $this->Flash->success('Image d\'album supprimé');
+                // redirige vers la page de cette citation
+                return $this->redirect(['action' => 'view', $album->id]);
+            } 
+            else {
+                $this->Flash->error('Suppression plantée');
+                // redirige vers la page de cette citation
+                return $this->redirect(['action' => 'view', $album->id]);
+            }
+        } else { // sinon on déclenche une erreur 400 parsonnalisée
+            throw new NotFoundException('Access denied, try again)');
+        }
+
+    }
+
 }
