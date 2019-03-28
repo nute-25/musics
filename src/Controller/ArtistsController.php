@@ -89,6 +89,26 @@ class ArtistsController extends AppController {
         $this->set(compact('new'));
     }
 
+    public function edit($id) {
+        $artist = $this->Artists->get($id);
+
+        // on autorise la methode put pour la modification
+        if ($this->request->is(['post', 'put'])) {
+            // en ne stockant pas le patchEntity dans une variable, il redonne seulement les champs qui ont été modifiés
+            $this->Artists->patchEntity($artist, $this->request->getData());
+            if($this->Artists->save($artist)) {
+                $this->Flash->success('Ok');
+
+                // redirige vers la page de cet artiste
+                return $this->redirect(['action' => 'view', $artist->id]);
+            }
+            $this->Flash->error('Modif plantée');
+        }
+
+        //envoie la variable à la vue
+        $this->set(compact('artist'));
+    }
+
     public function delete($id) {
 
         if ($this->request->is(['post', 'delete'])) {

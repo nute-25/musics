@@ -64,6 +64,26 @@ class AlbumsController extends AppController {
         $this->set(compact('new'));
     }
 
+    public function edit($id) {
+        $album = $this->Albums->get($id);
+
+        // on autorise la methode put pour la modification
+        if ($this->request->is(['post', 'put'])) {
+            // en ne stockant pas le patchEntity dans une variable, il redonne seulement les champs qui ont été modifiés
+            $this->Albums->patchEntity($album, $this->request->getData());
+            if($this->Albums->save($album)) {
+                $this->Flash->success('Ok');
+
+                // redirige vers la page de cet album
+                return $this->redirect(['action' => 'view', $album->id]);
+            }
+            $this->Flash->error('Modif plantée');
+        }
+
+        //envoie la variable à la vue
+        $this->set(compact('album'));
+    }
+
     public function delete($id) {
 
         if ($this->request->is(['post', 'delete'])) {
