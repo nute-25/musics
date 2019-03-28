@@ -22,21 +22,47 @@ class AlbumsController extends AppController {
         /* $this->set(['movie' => $one, 'comment' => $c, 'query' => $query->first()]); */
     }
 
-    /* public function add () {
-        $new = $this->Comments->newEntity();
+    public function add ($artist_id) {
+        $new = $this->Albums->newEntity();
 
         if ($this->request->is('post')) {
-            $new = $this->Comments->patchEntity($new, $this->request->getData());
+            $new = $this->Albums->patchEntity($new, $this->request->getData());
 
-            // USER : c'est l'id de celui qui est connecté
-            $new->user_id = $this->Auth->user('id');
+            $new->artist_id = $artist_id;
 
-            if($this->Comments->save($new)) {
-                $this->Flash->success('Le commentaire a été sauvegardé');
-                // on redirige vers la page du film qu'on a commenté
-                return $this->redirect(['controller' => 'movies', 'action' => 'view', $new->movie_id]);
+            // si le fichier correspond à l'un des types autorisés
+            if(in_array($this->request->data['cover']['type'], array('image/png', 'image/jpg', 'image/jpeg', 'image/gif'))) {
+                
+                // recupere l'extension qui était utilisée
+                $ext = pathinfo($this->request->getData('cover')['name'], PATHINFO_EXTENSION);
+                // création du nouveau nom
+                $name = 'a-'.rand(0,3000).'-'.time().'.'.$ext;
+
+                // reconstitution du chemin global du fichier
+                $adress = WWW_ROOT.'/data/covers/'.$name;
+
+                // valeur a enregistrer dans la base
+                $new->cover = $name;
+
+                // on le deplace de la mémoire temporaire vers l'emplacement souhaité
+                move_uploaded_file($this->request->getData('cover')['tmp_name'], $adress);
+
+            } else {
+                $new->cover = null;
+                $this->Flash->error('Ce format de fichier n\'est pas autorisé');
+            }
+
+            if($this->Albums->save($new)) {
+                $this->Flash->success('L\'album a été sauvegardé');
+                // on redirige vers la page de l'album enregistré
+                return $this->redirect(['controller' => 'artists', 'action' => 'view', $new->artist_id]);
             }
             $this->Flash->error('Try again');
         }
-    } */
+
+        //envoie la variable à la vue
+        $this->set(compact('new'));
+    }
+
+
 }

@@ -11,7 +11,7 @@ echo '</pre>';  */
     <?php 
     // si on a l'image, on l'affiche; sinon, on met une image par défaut
     if (!empty($album->cover)) { ?>
-        <?= $this->HTML->image('../data/posters/'.$album->cover, ['alt' => 'Cover de : '.$album->title]) ?>
+        <?= $this->HTML->image('../data/covers/'.$album->cover, ['alt' => 'Cover de : '.$album->title]) ?>
     <?php } else { ?>
         <!-- default.jpg se trouve dans webroot/img -->
         <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
