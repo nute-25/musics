@@ -18,13 +18,14 @@ echo '</pre>';  */
     <?php } ?>
     <figcaption>
         Photo de 
-        <?= $album->title ?>
-        <p>
-                <?= $this->HTML->link('Modifier la photo', ['action' => 'editImage', $album->id]) ?>
-        </p>
-        <?php if (!empty($album->cover)) { 
-                echo $this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']);
-        } ?>
+        <?= $album->title;
+            if($auth->user('status') === 'admin') {
+                echo '<p>'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $album->id]).'</p>';
+                if (!empty($album->cover)) {
+                    echo '<p>'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</p>';
+                }
+            }
+        ?>
     </figcaption>
 </figure>
 <p>
@@ -51,7 +52,9 @@ echo '</pre>';  */
 
 <p>id #<?= $album->id ?></p>
 
-
-<p><?= $this->HTML->link('Editer', ['action' => 'edit', $album->id]) ?></p>
-<?= $this->Form->postLink('Supprimer', ['action' => 'delete', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?']); ?>
-
+<?php
+    if($auth->user('status') === 'admin') {
+        echo '<p>'.$this->HTML->link('Editer', ['action' => 'edit', $album->id]).'</p>';
+        echo '<p>'.$this->Form->postLink('Supprimer', ['action' => 'delete', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?']).'</p>';
+    }
+?>
