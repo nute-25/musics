@@ -129,6 +129,55 @@ class ArtistsController extends AppController {
         
     }
 
+    public function editImage($id) {
+        $artist = $this->Artists->get($id);
+        $old_picture = $artist->picture;
+
+        // on autorise la methode put pour la modification
+        if ($this->request->is(['post', 'put'])) {
+            // en ne stockant pas le patchEntity dans une variable, il redonne seulement les champs qui ont été modifiés
+            $this->Artists->patchEntity($artist, $this->request->getData());
+
+            // si le fichier correspond à l'un des types autorisés
+            if(!empty($this->request->getData()['picture']['name']) && in_array($this->request->data['picture']['type'], array('image/png', 'image/jpg', 'image/jpeg', 'image/gif'))) {
+                
+                // recupere l'extension qui était utilisée
+                $ext = pathinfo($this->request->getData('picture')['name'], PATHINFO_EXTENSION);
+                // création du nouveau nom
+                $name = 'a-'.rand(0,3000).'-'.time().'.'.$ext;
+                // reconstitution du chemin global du fichier
+                $adress = WWW_ROOT.'/data/pictures/'.$name;
+                // valeur a enregistrer dans la base
+                $artist->picture = $name;
+                // on le deplace de la mémoire temporaire vers l'emplacement souhaité
+                move_uploaded_file($this->request->getData('picture')['tmp_name'], $adress);
+
+                if($this->Artists->save($artist)) {
+
+                    // suppresion de l'ancien picture
+                    // on recré le chemin vers le fichier
+                    $old_address = WWW_ROOT.'/data/pictures/'.$old_picture;
+                    //si le nom de fichier n'est pas vide et que le fichier existe
+                    if (!empty($old_picture) && file_exists($old_address)) {
+                        // supprime le fichier en local
+                        unlink($old_address);
+                    }
+    
+                    $this->Flash->success('Ok');
+                    // redirige vers la page de cette citation
+                    return $this->redirect(['action' => 'view', $artist->id]);
+                } 
+
+            } else {
+                $artist->picture = $old_picture;
+                $this->Flash->error('Ce format de fichier n\'est pas autorisé');
+            }
+ 
+        }
+        //envoie la variable à la vue
+        $this->set(compact('artist'));
+    }
+
     public function deleteImage($id) {
 
         if ($this->request->is('post')) {

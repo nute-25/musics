@@ -107,6 +107,55 @@ class AlbumsController extends AppController {
         
     }
 
+    public function editImage($id) {
+        $album = $this->Albums->get($id);
+        $old_cover = $album->cover;
+
+        // on autorise la methode put pour la modification
+        if ($this->request->is(['post', 'put'])) {
+            // en ne stockant pas le patchEntity dans une variable, il redonne seulement les champs qui ont été modifiés
+            $this->Albums->patchEntity($album, $this->request->getData());
+
+            // si le fichier correspond à l'un des types autorisés
+            if(!empty($this->request->getData()['cover']['name']) && in_array($this->request->data['cover']['type'], array('image/png', 'image/jpg', 'image/jpeg', 'image/gif'))) {
+                
+                // recupere l'extension qui était utilisée
+                $ext = pathinfo($this->request->getData('cover')['name'], PATHINFO_EXTENSION);
+                // création du nouveau nom
+                $name = 'a-'.rand(0,3000).'-'.time().'.'.$ext;
+                // reconstitution du chemin global du fichier
+                $adress = WWW_ROOT.'/data/covers/'.$name;
+                // valeur a enregistrer dans la base
+                $album->cover = $name;
+                // on le deplace de la mémoire temporaire vers l'emplacement souhaité
+                move_uploaded_file($this->request->getData('cover')['tmp_name'], $adress);
+
+                if($this->Albums->save($album)) {
+
+                    // suppresion de l'ancien cover
+                    // on recré le chemin vers le fichier
+                    $old_address = WWW_ROOT.'/data/covers/'.$old_cover;
+                    //si le nom de fichier n'est pas vide et que le fichier existe
+                    if (!empty($old_cover) && file_exists($old_address)) {
+                        // supprime le fichier en local
+                        unlink($old_address);
+                    }
+    
+                    $this->Flash->success('Ok');
+                    // redirige vers la page de cette citation
+                    return $this->redirect(['action' => 'view', $album->id]);
+                } 
+
+            } else {
+                $album->cover = $old_cover;
+                $this->Flash->error('Ce format de fichier n\'est pas autorisé');
+            }
+ 
+        }
+        //envoie la variable à la vue
+        $this->set(compact('album'));
+    }
+
     public function deleteImage($id) {
 
         if ($this->request->is('post')) {
