@@ -11,7 +11,7 @@ echo '</pre>'; */
     <?php 
     // si on a l'image, on l'affiche; sinon, on met une image par défaut
     if (!empty($artist->picture)) { ?>
-        <?= $this->HTML->image('../data/posters/'.$artist->picture, ['alt' => 'affiche de : '.$artist->pseudonym]) ?>
+        <?= $this->HTML->image('../data/pictures/'.$artist->picture, ['alt' => 'affiche de : '.$artist->pseudonym]) ?>
     <?php } else { ?>
         <!-- default.jpg se trouve dans webroot/img -->
         <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
