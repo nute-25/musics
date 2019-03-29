@@ -26,20 +26,12 @@ class ArtistsController extends AppController {
         $one = $this->Artists->get($id, [
             'contain' => 'Albums'
         ]);
-        /* $one = $this->Artists->get($id, [
-            'contain' => ['Albums.Users']
-        ]); */
 
-        $query = $this->Artists->Albums->find();
-        /* $query = $this->Movies->Comments->find()->where(['movie_id' => $id]);
-        $query->select(['moyenne' => $query->func()->avg('grade')]); */
-
-        /* // on crée une entité vide pour un commentaire
-        $c = $this->Movies->Comments->newEntity(); */
-
+        // on récupère et on stock dans une variable le favoris s'il existe pour cet user de l'artiste
+        $bookmark = $this->Artists->Bookmarks->find('all', 
+                                        array('conditions'=>array('Bookmarks.artist_id'=>$id, 'Bookmarks.user_id'=>$this->Auth->user('id'))));
         // cree la variable $artist pour la vue (elle contiendra la valeur de $one)
-        $this->set(['artist' => $one, 'albums' => $query]);
-        /* $this->set(['movie' => $one, 'comment' => $c, 'query' => $query->first()]); */
+        $this->set(['artist' => $one, 'bookmark' => $bookmark->first()]);
     }
 
     public function add() {

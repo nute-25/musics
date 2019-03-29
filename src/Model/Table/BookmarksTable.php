@@ -18,7 +18,7 @@ class BookmarksTable extends Table {
             'joinType' => 'INNER'
         ]);
         // un favori appartient à un utilisateur (liés par user_id)
-        $this->hasMany('Users', [
+        $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'dependent' => true,
             'cascadeCallbacks' => true

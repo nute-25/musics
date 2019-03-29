@@ -2,11 +2,26 @@
 /* echo '<pre>';
 var_dump($artist); 
 echo '</pre>'; */
+/* echo '<pre>';
+var_dump($bookmark); 
+echo '</pre>';  */
 ?>
 
 
 <h1>Artist</h1>
 <p><?= $artist->pseudonym ?></p>
+<?php
+    if($auth->user()) {
+        if(!empty($bookmark)) {
+            echo '<p>'.$this->Form->postLink('Supprimer des favoris', ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?']).'</p>';
+            echo '<p>Favoris</p>';
+        }
+        else {
+            echo '<p>'.$this->HTML->link('Ajouter aux favoris', ['controller' => 'bookmarks', 'action' => 'add', $artist->id]).'</p>';
+        }
+    }
+?>
+
 <figure>
     <?php 
     // si on a l'image, on l'affiche; sinon, on met une image par défaut
@@ -91,7 +106,7 @@ echo '</pre>'; */
 <?php
     if($auth->user('status') === 'admin') {
         echo '<p>'.$this->HTML->link('Editer', ['action' => 'edit', $artist->id]).'</p>';
-        echo '<p>'.$this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artist ?']).'</p>';
+        echo '<p>'.$this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?']).'</p>';
     }
 ?>
 
