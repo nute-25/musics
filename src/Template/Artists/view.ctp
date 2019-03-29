@@ -8,7 +8,7 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Artist</h1>
+<h1>Artiste</h1>
 <p><?= $artist->pseudonym ?></p>
 <p><?= $bookmarks ?> utilisateur(s) a(ont) mis cet artiste en favori</p>
 <?php

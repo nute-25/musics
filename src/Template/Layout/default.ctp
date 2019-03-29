@@ -34,6 +34,7 @@ $cakeDescription = 'Plateforme de musiques';
             ?>
             <?php   // si l'utilisateur est connecté
                 if($auth->user() !== NULL) {
+                    echo $this->Html->link('Espace utilisateur', ['controller' => 'users', 'action' => 'view', $auth->user('id')], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'view') ? 'active' : '']);
                     echo $this->Html->link('Se deconnecter', ['controller' => 'users', 'action' => 'logout']);
                 }
             ?>

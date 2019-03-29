@@ -59,4 +59,14 @@ class UsersController extends AppController {
         $this->Auth->logout();
         return $this->redirect(['controller' => 'Artists', 'action' => 'index']);
     }
+
+    public function view($id) {
+
+        // on récupère et on stock dans une variable les favoris, s'ils existent, de l'user tout en associant ces favoris à leur artiste
+        $user = $this->Users->get($id, [
+            'contain' => ['Bookmarks.Artists']
+        ]);
+
+        $this->set(compact('user'));
+    }
 }
