@@ -10,7 +10,7 @@ echo '</pre>'; */
 <p><?= $user->pseudo ?></p>
 
 
-<span class="label">Vos favoris :</span>
+<span class="label">Favoris :</span>
 <?php if(empty($user->bookmarks))
     echo '<p>Vous n\'avez pas de favori</p>';
 else { ?>
@@ -26,4 +26,37 @@ else { ?>
             </tr>
         <?php endforeach; ?>
     </table>
+
+
+    <?php if($user->id !== $auth->user('id')) { ?>
+
+        <span class="label">Vos favoris en commun :</span>
+        <table>
+            <tr>
+                <th>Nom de l'artiste</th>
+                <th>Spotify</th>
+            </tr>
+            <?php foreach($communbookmarks as $key => $value) : ?>
+                <tr>
+                    <td><?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->id]) ?></td>
+                    <td><a href='<?= $value->artist->spotify ?>'>--> voir</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+
+        <span class="label">Vous pourriez aimer :</span>
+        <table>
+            <tr>
+                <th>Nom de l'artiste</th>
+                <th>Spotify</th>
+            </tr>
+            <?php foreach($differentbookmarks as $key => $value) : ?>
+                <tr>
+                    <td><?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->id]) ?></td>
+                    <td><a href='<?= $value->artist->spotify ?>'>--> voir</a></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php } ?>
+
 <?php } ?>

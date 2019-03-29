@@ -16,7 +16,7 @@
     </tr>
     <?php foreach($u as $uneLigne) : ?>
         <tr>
-            <td><?= $uneLigne->pseudo ?></td>
+            <td><?= $this->Html->link( $uneLigne->pseudo, ['controller' => 'users', 'action' => 'view', $uneLigne->id]); ?></td>
             <td><?= $uneLigne->created ?></td>
             <td><?= $uneLigne->modified ?></td>
         </tr>

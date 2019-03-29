@@ -67,6 +67,26 @@ class UsersController extends AppController {
             'contain' => ['Bookmarks.Artists']
         ]);
 
-        $this->set(compact('user'));
+        // selectionne la colonne des favoris de l'utilisateurs connecté
+        $query = $this->Users->Bookmarks->find()
+                    ->select('artist_id')
+                    ->where(['user_id' => $this->Auth->user('id')]);
+
+
+        // selectionne les favoris d'un utilisateur qui sont en commun avec ceux de l'user connecté, puis les regroupe par artiste
+        $query2 = $this->Users->Bookmarks->find()
+                    ->contain(['Artists'])
+                    ->where(['artist_id IN' => $query])
+                    ->andWhere(['user_id' => $id]);
+        $communbookmarks = $query2->all();
+
+        // selectionne les favoris d'un utilisateur qui sont différents de ceux de l'user connecté, puis les regroupe par artiste
+        $query3 = $this->Users->Bookmarks->find()
+                    ->contain(['Artists'])
+                    ->where(['artist_id NOT IN' => $query])
+                    ->andWhere(['user_id' => $id]);
+        $differentbookmarks = $query3->all();
+
+        $this->set(compact('user', 'communbookmarks', 'differentbookmarks'));
     }
 }
