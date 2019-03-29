@@ -10,6 +10,7 @@ echo '</pre>';  */
 
 <h1>Artist</h1>
 <p><?= $artist->pseudonym ?></p>
+<p><?= $bookmarks ?> utilisateur(s) a(ont) mis cet artiste en favori</p>
 <?php
     if($auth->user()) {
         if(!empty($bookmark)) {

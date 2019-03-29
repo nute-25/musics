@@ -30,8 +30,12 @@ class ArtistsController extends AppController {
         // on récupère et on stock dans une variable le favoris s'il existe pour cet user de l'artiste
         $bookmark = $this->Artists->Bookmarks->find('all', 
                                         array('conditions'=>array('Bookmarks.artist_id'=>$id, 'Bookmarks.user_id'=>$this->Auth->user('id'))));
+
+        // on récupère l'ensemble des favoris s'il en existe pour cet artiste
+        $bookmarks = $this->Artists->Bookmarks->find('all', 
+                                        array('conditions'=>array('Bookmarks.artist_id'=>$id)));
         // cree la variable $artist pour la vue (elle contiendra la valeur de $one)
-        $this->set(['artist' => $one, 'bookmark' => $bookmark->first()]);
+        $this->set(['artist' => $one, 'bookmark' => $bookmark->first(), 'bookmarks' => $bookmarks->count()]);
     }
 
     public function add() {
