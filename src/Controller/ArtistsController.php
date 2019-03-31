@@ -15,8 +15,59 @@ class ArtistsController extends AppController {
     // affiche le contenu de la BDD
     public function index() {
         $artists = $this->paginate($this->Artists);
+
+
+        // top5 des artistes favoris
+        $query = $this->Artists->Bookmarks->find();
+        $query->select(['artist_id','somme' => $query->func()->count('artist_id')])
+                ->group(['artist_id'])
+                ->order(['somme' => 'DESC'])
+                ->limit(5);
+        $populars = $query->all();
+
+        $topartists = array();
+
+        foreach ($populars as $key => $value) {
+            $topartists[] = $this->Artists->get($value->artist_id);
+        }
+
+
+        // top5 des challengers (artistes les moins suivis)
+        $bookmarks = $this->Artists->Bookmarks->find();
+        $bookmarks_array = array();
+        foreach ($bookmarks as $value){
+            $bookmarks_array[] = $value->artist_id;
+        }
+
+        $notpopular = $this->Artists->find()
+                                    ->where(['id NOT IN' => $bookmarks_array])
+                                    ->order('rand()')
+                                    ->limit(5);
+        $topchallengers = array();
+        
+
+        $challenger_idx = 0;
+        foreach ($notpopular as $value ){ 
+            $challenger_idx++;
+            array_push($topchallengers, $value);
+        }
+
+        if($challenger_idx < 5) {
+            $challenger = $this->Artists->Bookmarks->find();
+            $challenger->select(['artist_id', 'count' => $challenger->func()->count('*')])
+                        ->group(['artist_id'])
+                        ->order(['count' => 'ASC'])
+                        ->limit(5-$challenger_idx);
+            $challengers = $challenger->all();
+            
+            foreach ($challengers as $value){
+                array_push($topchallengers, $this->Artists->get($value->artist_id));
+            }
+        }
+
+
         // on transmet le contenu stocké dans $artists à la view
-        $this->set(compact('artists'));
+        $this->set(compact('artists', 'topartists', 'topchallengers'));
     }
 
     public function view($id) {

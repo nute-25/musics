@@ -24,7 +24,11 @@ $cakeDescription = 'Plateforme de musiques';
         <h1><?= $this->Html->link('Musics !', ['controller' => 'artists', 'action' => 'index']) ?></h1>
         <nav>
             <?= $this->Html->link('Liste des artistes', ['controller' => 'artists', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'index') ? 'active' : '']) ?>
-            <?= $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']) ?>
+            <?php 
+                if($auth->user() && $auth->user('status') === 'admin') {
+                    echo $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']);
+                }
+            ?>
             <?= $this->Html->link('Liste des utilisateurs', ['controller' => 'users', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'index') ? 'active' : '']) ?>
             <?php   // si l'utilisateur est non connecté
                 if($auth->user() === NULL) {

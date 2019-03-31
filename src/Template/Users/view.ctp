@@ -28,7 +28,7 @@ else { ?>
     </table>
 
 
-    <?php if($user->id !== $auth->user('id')) { ?>
+    <?php if($auth->user('id') && $user->id !== $auth->user('id')) { ?>
 
         <span class="label">Vos favoris en commun :</span>
         <table>

@@ -4,8 +4,7 @@
 // echo '</pre>';
 ?>
 
-<p>Il y a <?= $u->count() ?> film(s)</p>
-<!-- part 1 : on redirige vers un form -->
+<p>Il y a <?= $u->count() ?> utilisateur(s)</p>
 <p><?= $this->HTML->link('Ajouter un utilisateur', ['action' => 'add']) ?></p>
 
 <table>

@@ -29,8 +29,37 @@ echo '</pre>'; */
         </tr>
     <?php endforeach; ?>
 </table>
+
 <?php
     echo $this->Paginator->first('first');
     echo $this->Paginator->numbers();
     echo $this->Paginator->last('last');
 ?>
+
+<span class="label">Top 5 des favoris :</span>
+<table>
+    <tr>
+        <th>Nom de l'artiste</th>
+        <th>Spotify</th>
+    </tr>
+    <?php foreach($topartists as $key => $value) : ?>
+        <tr>
+            <td><?= $this->Html->link($value->pseudonym, ['action' => 'view', $value->id]) ?></td>
+            <td><a href='<?= $value->spotify ?>'>--> voir</a></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<span class="label">Top 5 des challengers :</span>
+<table>
+    <tr>
+        <th>Nom de l'artiste</th>
+        <th>Spotify</th>
+    </tr>
+    <?php foreach($topchallengers as $key => $value) : ?>
+        <tr>
+            <td><?= $this->Html->link($value->pseudonym, ['action' => 'view', $value->id]) ?></td>
+            <td><a href='<?= $value->spotify ?>'>--> voir</a></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
