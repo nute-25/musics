@@ -25,8 +25,14 @@ $cakeDescription = 'Plateforme de musiques';
         <nav>
             <?= $this->Html->link('Liste des artistes', ['controller' => 'artists', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'index') ? 'active' : '']) ?>
             <?php 
-                if($auth->user() && $auth->user('status') === 'admin') {
-                    echo $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']);
+                if($auth->user()) {
+                    if($auth->user('status') === 'admin') {
+                        echo $this->Html->link('Liste des demandes', ['controller' => 'requests', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Requests' && $this->template === 'index') ? 'active' : '']);
+                        echo $this->Html->link('Ajouter un artiste', ['controller' => 'artists', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Artists' && $this->template === 'add') ? 'active' : '']);
+                    }
+                    else {
+                        echo $this->Html->link('Faire une demande d\'ajout', ['controller' => 'requests', 'action' => 'add'], [ 'class' => ($this->templatePath === 'Requests' && $this->template === 'add') ? 'active' : '']);
+                    }
                 }
             ?>
             <?= $this->Html->link('Liste des utilisateurs', ['controller' => 'users', 'action' => 'index'], [ 'class' => ($this->templatePath === 'Users' && $this->template === 'index') ? 'active' : '']) ?>
