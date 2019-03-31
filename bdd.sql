@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le :  ven. 22 mars 2019 à 16:13
+-- Généré le :  Dim 31 mars 2019 à 22:08
 -- Version du serveur :  5.7.23
 -- Version de PHP :  7.2.8
 
@@ -37,10 +37,12 @@ CREATE TABLE `albums` (
 --
 
 INSERT INTO `albums` (`id`, `created`, `modified`, `title`, `cover`, `style`, `spotify`, `releaseyear`, `artist_id`) VALUES
-(1, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Cure', NULL, 'Chanson française, rap', 'https://open.spotify.com/album/7ndyYB7UDPRSRCbb3AxHBZ', 2018, 1),
 (4, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Brainwashed', NULL, 'Rock, pop rock, rock \'n\' roll, blues, musiques du monde', 'https://open.spotify.com/album/2VFLjY1S0D8nKml6nlU2MD', 2002, 3),
 (5, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Live In Japan', NULL, 'Rock, pop rock, rock \'n\' roll, blues, musiques du monde', 'https://open.spotify.com/album/4S2ZR5njbJez1rV8DV5Vtl', 1992, 3),
-(6, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Thirty Three &1/3', NULL, 'Rock, pop rock, rock \'n\' roll, blues, musiques du monde', 'https://open.spotify.com/album/7y9Fefugnr5b8fHHt9eE7X', 1976, 3);
+(6, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Thirty Three &1/3', NULL, 'Rock, pop rock, rock \'n\' roll, blues, musiques du monde', 'https://open.spotify.com/album/7y9Fefugnr5b8fHHt9eE7X', 1976, 3),
+(7, '2019-03-28 09:48:14', '2019-03-28 09:48:14', 'Yellow Submarine Songtrack', 'a-2305-1553766494.jpeg', 'Pop, rock', 'https://open.spotify.com/album/0XRZpF083HqgygM0v1hQyE', 2014, 4),
+(8, '2019-03-28 10:00:12', '2019-03-28 12:47:49', 'Let it be...Naked', 'a-1196-1553767212.jpeg', 'Pop, rock', 'https://open.spotify.com/album/4KYcffwC5HgjJLdpQU9SjC', 2014, 4),
+(10, '2019-03-28 13:29:13', '2019-03-28 13:30:19', 'Brol', 'a-674-1553779819.jpeg', 'Pop', 'https://open.spotify.com/album/6KSvWFf4g4PrIldtchJsTC', 2018, 2);
 
 -- --------------------------------------------------------
 
@@ -64,9 +66,10 @@ CREATE TABLE `artists` (
 --
 
 INSERT INTO `artists` (`id`, `created`, `modified`, `pseudonym`, `debut`, `country`, `spotify`, `picture`) VALUES
-(1, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Eddy de Pretto', 2016, 'France', 'https://open.spotify.com/artist/7rFugkk9ZvVB1zXHg8h0rj', NULL),
-(2, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'Angèle', 2015, 'Belgique', 'https://open.spotify.com/artist/3QVolfxko2UyCOtexhVTli', NULL),
-(3, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'George Harrison', 1958, 'Royaume-Uni', 'https://open.spotify.com/artist/7FIoB5PHdrMZVC3q2HE5MS', NULL);
+(2, '2019-03-22 00:00:00', '2019-03-28 13:30:42', 'Angèle', 2015, 'Belgique', 'https://open.spotify.com/artist/3QVolfxko2UyCOtexhVTli', 'a-2446-1553779842.jpeg'),
+(3, '2019-03-22 00:00:00', '2019-03-22 00:00:00', 'George Harrison', 1958, 'Royaume-Uni', 'https://open.spotify.com/artist/7FIoB5PHdrMZVC3q2HE5MS', NULL),
+(4, '2019-03-28 08:38:15', '2019-03-28 13:24:56', 'The Beatles', 1960, 'Royaume-Unis', 'https://open.spotify.com/artist/3WrFJ7ztbogyGnTHbHJFl2', 'a-2505-1553779496.jpeg'),
+(6, '2019-03-31 21:39:03', '2019-03-31 21:39:03', 'Jessie Reyez', 2014, 'Canada', 'https://open.spotify.com/artist/3KedxarmBCyFBevnqQHy3P', 'a-1674-1554068343.jpeg');
 
 -- --------------------------------------------------------
 
@@ -76,11 +79,20 @@ INSERT INTO `artists` (`id`, `created`, `modified`, `pseudonym`, `debut`, `count
 
 CREATE TABLE `bookmarks` (
   `id` int(11) NOT NULL,
-  `created` int(11) NOT NULL,
-  `modified` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
   `user_id` int(11) NOT NULL,
   `artist_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `bookmarks`
+--
+
+INSERT INTO `bookmarks` (`id`, `created`, `modified`, `user_id`, `artist_id`) VALUES
+(1, '2019-03-29 09:05:24', '2019-03-29 09:05:24', 1, 3),
+(6, '2019-03-29 11:03:00', '2019-03-29 11:03:00', 2, 2),
+(7, '2019-03-29 11:03:24', '2019-03-29 11:03:24', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -98,6 +110,17 @@ CREATE TABLE `requests` (
   `status` varchar(15) NOT NULL DEFAULT 'pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `requests`
+--
+
+INSERT INTO `requests` (`id`, `created`, `modified`, `user_id`, `artistname`, `albumtitle`, `status`) VALUES
+(1, '2019-03-31 18:52:40', '2019-03-31 21:33:51', 1, 'Jessie Reyez', '', 'accept'),
+(2, '2019-03-31 21:41:05', '2019-03-31 21:47:38', 1, 'Angèle', 'Brol', 'accept'),
+(3, '2019-03-31 21:42:38', '2019-03-31 21:43:03', 1, 'George Harrison', 'Live In Japan', 'accept'),
+(4, '2019-03-31 21:48:05', '2019-03-31 21:48:42', 1, '', '', 'decline'),
+(5, '2019-03-31 21:48:27', '2019-03-31 21:48:44', 1, 'Bidule', '', 'decline');
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +135,14 @@ CREATE TABLE `users` (
   `password` varchar(250) NOT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `created`, `modified`, `pseudo`, `password`, `status`) VALUES
+(1, '2019-03-28 14:25:13', '2019-03-28 14:25:13', 'Nolwenn', '$2y$10$Ehks2rsyZ06mzMBn.Gscfel7T8eOMz.mBNpGDtFo1L1n/r270vd2m', 'user'),
+(2, '2019-03-28 15:36:19', '2019-03-28 15:36:19', 'admin', '$2y$10$NFJVLg4GY6EjecGrmIQcHOlts9WMCToRxfMA3w2Kcuu.HIYyvQWea', 'admin');
 
 --
 -- Index pour les tables déchargées
@@ -155,28 +186,28 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `bookmarks`
 --
 ALTER TABLE `bookmarks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `requests`
 --
 ALTER TABLE `requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

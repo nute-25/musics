@@ -12,9 +12,19 @@ class RequestsController extends AppController {
     ];
 
     public function index() {
-        $requests = $this->paginate($this->Requests);
+        $pending_requests = $this->Requests->find();
+        $pending_requests->where(['status' => 'pending']);
+        $pending_pagination = $this->paginate($pending_requests);
 
-        $this->set(compact('requests'));
+    	$accepted_requests = $this->Requests->find();
+        $accepted_requests->where(['status' => 'accept']);
+        $accepted_pagination = $this->paginate($accepted_requests);
+
+    	$declined_requests = $this->Requests->find();
+        $declined_requests->where(['status' => 'decline']);
+        $declined_pagination = $this->paginate($declined_requests);
+
+        $this->set(compact('accepted_pagination', 'declined_pagination', 'pending_requests', 'accepted_requests', 'declined_requests'));
     }
 
     public function add() {
@@ -39,5 +49,31 @@ class RequestsController extends AppController {
 
         //envoie la variable à la vue
         $this->set(compact('new'));
+    }
+
+    public function accept($id) {
+    	$accepted_request = $this->Requests->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            $this->Requests->patchEntity($accepted_request, $this->request->getData());
+            $accepted_request->status= 'accept';
+            if ($this->Requests->save($accepted_request)) {
+                $this->Flash->success('Modif ok');
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error('Modif plantée');
+        }
+    }
+    
+    public function decline($id) {
+    	$declined_request = $this->Requests->get($id);
+        if ($this->request->is(['post', 'put'])) {
+            $this->Requests->patchEntity($declined_request, $this->request->getData());
+            $declined_request->status = 'decline';
+            if ($this->Requests->save($declined_request)) {
+                $this->Flash->success('Modif ok');
+                return $this->redirect(['action' => 'index']);
+            }
+            $this->Flash->error('Modif plantée');
+        }
     }
 }
