@@ -130,9 +130,32 @@ th{
     display: none;
 }
 
+
+
+
+.container_list{
+    margin: auto;
+    width: 1145px;
+}
+.list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 25px;
+    margin-bottom: 35px;
+}
+
 figure{
     position: relative;
-    width: 525px;
+    width: 360px;
+    height: 202px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 8px;
 }
 figcaption{
     position: absolute;
@@ -141,13 +164,21 @@ figcaption{
     width: 100%;
     padding: 10px;
     background:rgba(0,0,0,.6);
-    color: #fff;
-    transition: all 0.5s;
+    text-align: center;
 }
 figcaption a{
-    background-color: rgb(164, 204, 182);
-    color: black;
+    color: #ccc;
     text-decoration: none;
-    padding: 15px;
 }
 
+.pagination {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: auto;
+    width: 300px;
+}
+.pagination li a {
+    text-decoration: none;
+}
