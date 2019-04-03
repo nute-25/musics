@@ -9,40 +9,45 @@ echo '</pre>';  */
 
 
 <h1>
-    <span>
-        <?php if(!empty($artist->spotify)) { ?>
-            <?= $this->HTML->link(
-            $this->HTML->image("../data/icons/spotify.svg"),
-            $artist->spotify,
-            ['escape' => false]) ?>
-         <?php } ?>
-    </span>
-    
-    Artiste : 
-    <span><?= $artist->pseudonym ?></span>
+    <div>
+        <span>
+            <?php if(!empty($artist->spotify)) { ?>
+                <?= $this->HTML->link(
+                $this->HTML->image("../data/icons/spotify.svg"),
+                $artist->spotify,
+                ['escape' => false]) ?>
+            <?php } ?>
+        </span>
+        <div>
+            Artiste : 
+            <span><?= $artist->pseudonym ?></span>
+        </div>
 
-    <?php if($auth->user()) {
-        if(!empty($bookmark)) { ?>
-            <?= $this->Form->postLink($this->HTML->image("../data/icons/bookmark.svg").'<span> Favoris</span>',
-            ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id],
-            ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?', 'escape' => false, 'class' => 'button']) ?>
-    <?php }
-        else { ?>
-            <?= $this->HTML->link(
-            $this->HTML->image("../data/icons/no_bookmark.svg").'<span> Favoris</span>',
-            ['controller' => 'bookmarks', 'action' => 'add', $artist->id],
-            ['class' => 'button', 'escape' => false]) ?>
-    <?php } 
-    } ?>
+        <?php if($auth->user()) {
+            if(!empty($bookmark)) { ?>
+                <?= $this->Form->postLink($this->HTML->image("../data/icons/bookmark.svg").'<span> Favoris</span>',
+                ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id],
+                ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?', 'escape' => false, 'class' => 'button']) ?>
+        <?php }
+            else { ?>
+                <?= $this->HTML->link(
+                $this->HTML->image("../data/icons/no_bookmark.svg").'<span> Favoris</span>',
+                ['controller' => 'bookmarks', 'action' => 'add', $artist->id],
+                ['class' => 'button', 'escape' => false]) ?>
+        <?php } 
+        } ?>
+    </div>
 
-    <?php if($auth->user('status') === 'admin') { ?>
-    <?= $this->HTML->link(
-    $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
-    ['action' => 'edit', $artist->id],
-    ['class' => 'button', 'escape' => false]) ?>
-    <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
-    ['action' => 'delete', $artist->id],
-    ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?', 'escape' => false, 'class' => 'button']) ?>
+    <div>
+        <?php if($auth->user('status') === 'admin') { ?>
+        <?= $this->HTML->link(
+        $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+        ['action' => 'edit', $artist->id],
+        ['class' => 'button', 'escape' => false]) ?>
+        <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+        ['action' => 'delete', $artist->id],
+        ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?', 'escape' => false, 'class' => 'button']) ?>
+    </div>
 <?php } ?>
 </h1>
 

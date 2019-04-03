@@ -63,6 +63,17 @@ main h1 {
     padding-bottom: 5px;
     margin-bottom: 10px;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+main h1 > div:first-child {
+    display: flex;
+}
+main h1 > div:first-child span,
+main h1 > div:first-child div,
+main h1 > div:first-child a {
+    margin: 0 5px;
 }
 main h1 span {
     text-transform: capitalize;
@@ -221,4 +232,11 @@ figcaption a {
 
 #pending_request_list, #accepted_request_list, #declined_request_list {
     display: none;
+}
+
+.flex-1 {
+    flex-grow: 1;
+}
+.flex-2 {
+    flex-grow: 4;
 }

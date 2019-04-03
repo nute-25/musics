@@ -6,27 +6,31 @@ echo '</pre>';  */
 
 
 <h1>
-    <span>
-        <?php if(!empty($album->spotify)) { ?>
-            <?= $this->HTML->link(
-            $this->HTML->image("../data/icons/spotify.svg"),
-            $album->spotify,
-            ['escape' => false]) ?>
-         <?php } ?>
-    </span>
-    Album : 
-    <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span>
-    <?php if($auth->user('status') === 'admin') { ?>
+    <div>
         <span>
-            <?= $this->HTML->link(
-            $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
-            ['action' => 'edit', $album->id],
-            ['class' => 'button', 'escape' => false]) ?>
-            <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
-            ['action' => 'delete', $album->id],
-            ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?', 'escape' => false, 'class' => 'button']) ?>
+            <?php if(!empty($album->spotify)) { ?>
+                <?= $this->HTML->link(
+                $this->HTML->image("../data/icons/spotify.svg"),
+                $album->spotify,
+                ['escape' => false]) ?>
+            <?php } ?>
         </span>
-    <?php } ?>
+        Album : 
+        <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span>
+    </div>
+    <div>
+        <?php if($auth->user('status') === 'admin') { ?>
+            <span>
+                <?= $this->HTML->link(
+                $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+                ['action' => 'edit', $album->id],
+                ['class' => 'button', 'escape' => false]) ?>
+                <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+                ['action' => 'delete', $album->id],
+                ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?', 'escape' => false, 'class' => 'button']) ?>
+            </span>
+        <?php } ?>
+    </div>
 </h1>
 <figure>
     <?php 
