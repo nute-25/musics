@@ -5,7 +5,16 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Album : 
+<h1>
+    <span>
+        <?php if(!empty($album->spotify)) { ?>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/spotify.svg"),
+            $album->spotify,
+            ['escape' => false]) ?>
+         <?php } ?>
+    </span>
+    Album : 
     <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span>
     <?php if($auth->user('status') === 'admin') { ?>
         <span>
@@ -45,16 +54,6 @@ echo '</pre>';  */
 <p>
     <span class="label">Genre :</span>
     <?=  (!empty($album->style)) ? $album->style : '<span style="font-style:italic;">Inconnue</span>' ?>
-</p>
-<p>
-    <span class="label">Lien vers son open spotify :</span>
-    <?php  if(!empty($album->spotify)) {
-        echo '<a href=';
-        echo $album->spotify;
-        echo '>--> voir</a>';
-    } else {
-        echo '<span style="font-style:italic;">Aucun lien disponible</span>';
-    } ?>
 </p>
 <p>
     <span class="label">Son widget Spotify :</span>

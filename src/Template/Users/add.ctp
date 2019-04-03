@@ -4,5 +4,7 @@
 <?= $this->Form->create($new) ?>
     <?= $this->Form->control('pseudo', ['label' => 'Pseudo']) ?>
     <?= $this->Form->control('password', ['label' => 'Password']) ?>
-    <?= $this->Form->button('Ajouter') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>

@@ -10,17 +10,31 @@ echo '</pre>';  */
 
 <h1>
     <span>
-        <?php  if(!empty($artist->spotify)) {
-            echo '<a href=';
-            echo $artist->spotify;
-            echo '>--> voir</a>';
-        } else {
-            echo '<span style="font-style:italic;">Aucun lien disponible</span>';
-        } ?>
+        <?php if(!empty($artist->spotify)) { ?>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/spotify.svg"),
+            $artist->spotify,
+            ['escape' => false]) ?>
+         <?php } ?>
     </span>
     
     Artiste : 
     <span><?= $artist->pseudonym ?></span>
+
+    <?php if($auth->user()) {
+        if(!empty($bookmark)) { ?>
+            <?= $this->Form->postLink($this->HTML->image("../data/icons/bookmark.svg").'<span> Favoris</span>',
+            ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id],
+            ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?', 'escape' => false, 'class' => 'button']) ?>
+    <?php }
+        else { ?>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/no_bookmark.svg").'<span> Favoris</span>',
+            ['controller' => 'bookmarks', 'action' => 'add', $artist->id],
+            ['class' => 'button', 'escape' => false]) ?>
+    <?php } 
+    } ?>
+
     <?php if($auth->user('status') === 'admin') { ?>
     <?= $this->HTML->link(
     $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
@@ -38,17 +52,7 @@ echo '</pre>';  */
     <?= $bookmarks.' utilisateur a mis cet artiste en favori' ?></p>
 <?php } ?>
 
-<?php
-    if($auth->user()) {
-        if(!empty($bookmark)) {
-            echo '<div class="button">'.$this->Form->postLink('Supprimer des favoris', ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?']).'</div>';
-            echo '<p>Favoris</p>';
-        }
-        else {
-            echo '<div class="button">'.$this->HTML->link('Ajouter aux favoris', ['controller' => 'bookmarks', 'action' => 'add', $artist->id]).'</div>';
-        }
-    }
-?>
+
 
 <figure>
     <?php 

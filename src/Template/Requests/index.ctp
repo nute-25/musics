@@ -7,6 +7,9 @@ echo '</pre>'; */
 
 <?php if($pending_requests->count() > 1) { ?>
     <?= '<h2 id="pending_request" class="pointer">'.$pending_requests->count().' demandes en attente : </h2>' ?>
+<?php }
+    elseif($pending_requests->count() === 1) { ?>
+    <?= '<h2 id="pending_request" class="pointer">'.$pending_requests->count().' demande en attente : </h2>' ?>
 <?php } else { ?> 
     <?= '<h2>'.$pending_requests->count().' demande en attente.</h2>' ?>
 <?php } ?>
@@ -22,8 +25,12 @@ echo '</pre>'; */
                 <td><?= $uneLigne->artistname ?></td>
                 <td><?= ($uneLigne->albumtitle) ? $uneLigne->albumtitle : 'non précisé' ?></td>
                 <td>
-                    <?= $this->Form->postLink('Accept', ['action' => 'accept', $uneLigne->id]); ?>
-                    <?= $this->Form->postLink('Decline', ['action' => 'decline', $uneLigne->id]); ?>
+                    <?= $this->Form->postLink($this->HTML->image("../data/icons/done_white.svg").'<span> Accepter</span>',
+                    ['action' => 'accept', $uneLigne->id],
+                    ['confirm' => 'Etes-vous sûr de vouloir l\'accepter ?', 'escape' => false, 'class' => 'button']) ?>
+                    <?= $this->Form->postLink($this->HTML->image("../data/icons/clear_white.svg").'<span> Refuser</span>',
+                    ['action' => 'decline', $uneLigne->id],
+                    ['confirm' => 'Etes-vous sûr de vouloir la supprimer ?', 'escape' => false, 'class' => 'button']) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -37,6 +44,9 @@ echo '</pre>'; */
 
 <?php if($accepted_requests->count() > 1) { ?>
     <?= '<h2 id="accepted_request" class="pointer">'.$accepted_requests->count().' demandes acceptées : </h2>' ?>
+<?php }
+    elseif($accepted_requests->count() === 1) { ?>
+    <?= '<h2 id="accepted_request" class="pointer">'.$accepted_requests->count().' demande acceptée : </h2>' ?>
 <?php } else { ?> 
     <?= '<h2>'.$accepted_requests->count().' demandes acceptées.</h2>' ?>
 <?php } ?>
@@ -64,6 +74,9 @@ echo '</pre>'; */
 
 <?php if($declined_requests->count() > 1) { ?>
     <?= '<h2 id="declined_request" class="pointer">'.$declined_requests->count().' demandes déclinées : </h2>' ?>
+<?php }
+    elseif($declined_requests->count() === 1) { ?>
+    <?= '<h2 id="declined_request" class="pointer">'.$declined_requests->count().' demande déclinée : </h2>' ?>
 <?php } else { ?> 
     <?= '<h2>'.$declined_requests->count().' demandes déclinées.</h2>' ?>
 <?php } ?>

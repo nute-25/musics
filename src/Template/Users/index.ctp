@@ -5,7 +5,12 @@
 ?>
 
 <p>Il y a <?= $u->count() ?> utilisateur(s)</p>
-<div class="button"><?= $this->HTML->link('Ajouter un utilisateur', ['action' => 'add']) ?></div>
+<?php if($auth->user('status') === 'admin') { ?>
+    <?= $this->HTML->link(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['action' => 'add'],
+        ['class' => 'button', 'escape' => false]) ?>
+<?php } ?>
 
 <table>
     <tr>
