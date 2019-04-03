@@ -8,7 +8,29 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Artiste : <span><?= $artist->pseudonym ?></span></h1>
+<h1>
+    <span>
+        <?php  if(!empty($artist->spotify)) {
+            echo '<a href=';
+            echo $artist->spotify;
+            echo '>--> voir</a>';
+        } else {
+            echo '<span style="font-style:italic;">Aucun lien disponible</span>';
+        } ?>
+    </span>
+    
+    Artiste : 
+    <span><?= $artist->pseudonym ?></span>
+    <?php if($auth->user('status') === 'admin') { ?>
+    <?= $this->HTML->link(
+    $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+    ['action' => 'edit', $artist->id],
+    ['class' => 'button', 'escape' => false]) ?>
+    <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+    ['action' => 'delete', $artist->id],
+    ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?', 'escape' => false, 'class' => 'button']) ?>
+<?php } ?>
+</h1>
 
 <p><?php if($bookmarks > 1) { ?>
     <?= $bookmarks.' utilisateurs ont mis cet artiste en favori.' ?> 
@@ -36,16 +58,21 @@ echo '</pre>';  */
     <?php } else { ?>
         <!-- default.jpg se trouve dans webroot/img -->
         <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+    <?php } 
+    if($auth->user('status') === 'admin') { ?>
+        <figcaption>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/edit_white.svg").'<span> Modifier</span>',
+            ['action' => 'editImage', $artist->id],
+            ['class' => 'button', 'escape' => false]) ?>
+            <?php if (!empty($artist->picture)) { ?>
+                <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+                ['action' => 'deleteImage', $artist->id],
+                ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?', 'escape' => false, 'class' => 'button']) ?>
+            <?php } ?>
+        </figcaption>
     <?php } ?>
 </figure>
-<?php
-    if($auth->user('status') === 'admin') {
-        echo '<div class="button">'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $artist->id]).'</div>';
-        if (!empty($artist->picture)) {
-            echo '<div class="button">'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</div>';
-        }
-    }
-?>
 <p>
     <span class="label">Début d'activité :</span>
     <?=  (!empty($artist->debut)) ? $artist->debut : '<span style="font-style:italic;">Inconnue</span>' ?>
@@ -54,16 +81,7 @@ echo '</pre>';  */
     <span class="label">Région d'origine :</span>
     <?=  (!empty($artist->country)) ? $artist->country : ''; ?>
 </p>
-<p>
-    <span class="label">Lien vers son open spotify :</span>
-    <?php  if(!empty($artist->spotify)) {
-        echo '<a href=';
-        echo $artist->spotify;
-        echo '>--> voir</a>';
-    } else {
-        echo '<span style="font-style:italic;">Aucun lien disponible</span>';
-    } ?>
-</p>
+
 <p>
     <span class="label">Son widget Spotify :</span>
     <?php 
@@ -72,10 +90,14 @@ echo '</pre>';  */
     ?>
     <iframe src="<?= $src ?>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-<p>id #<?= $artist->id ?></p>
-
 <p>
     <span class="label">Liste de ses albums :</span>
+    <?php if($auth->user('status') === 'admin') { ?>
+        <?= $this->HTML->link(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['controller' => 'albums', 'action' => 'add', $artist->id],
+        ['class' => 'button', 'escape' => false]) ?>
+    <?php } ?>
     <?php if(empty($artist->albums))
         echo '<p>Il n\'y a pas d\'albums disponibles pour cet artiste</p>';
     else { ?>
@@ -96,17 +118,9 @@ echo '</pre>';  */
             <?php endforeach; ?>
         </table>
     <?php } ?>
-    <?php if($auth->user('status') === 'admin') { ?>
-        <?= '<div class="button">'.$this->HTML->link('Ajouter un album', ['controller' => 'albums', 'action' => 'add', $artist->id]).'</div>' ?>
-    <?php } ?>
 </p>
 
 
-<?php
-    if($auth->user('status') === 'admin') {
-        echo '<div class="button">'.$this->HTML->link('Editer', ['action' => 'edit', $artist->id]).'</div>';
-        echo '<div class="button">'.$this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?']).'</div>';
-    }
-?>
+
 
 

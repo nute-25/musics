@@ -64,8 +64,14 @@ main h1 {
     margin-bottom: 10px;
     text-transform: uppercase;
 }
-main h1 span{
+main h1 span {
     text-transform: capitalize;
+}
+main h1 a.button {
+    max-height: 42px;
+    padding: 10px;
+    font-size: 16px;
+    vertical-align: middle;
 }
 span.lowercase {
     text-transform: lowercase;
@@ -75,6 +81,9 @@ main h2 {
     border-bottom: 1px solid #ccc;
     padding-bottom: 5px;
     margin-bottom: 10px;
+}
+h2.pointer {
+    cursor: pointer;
 }
 form {
     width: 50%;
@@ -102,12 +111,17 @@ button:hover, .button:hover {
     background: rgb(164, 204, 182);
     transition-duration: 0.75s;
 }
-button, .button a {
+button, .button  {
     color: #fff; 
 }
-.button a {
+button img,.button img{
+    vertical-align: middle;
+}
+.button {
     text-decoration: none;
 }
+
+
 input,
 textarea {
     width: 100%;
@@ -186,6 +200,7 @@ figcaption {
     padding: 10px;
     background:rgba(0,0,0,.6);
     text-align: center;
+    color: white;
 }
 figcaption a {
     color: #ccc;
@@ -202,4 +217,8 @@ figcaption a {
 }
 .pagination li a {
     text-decoration: none;
+}
+
+#pending_request_list, #accepted_request_list, #declined_request_list {
+    display: none;
 }

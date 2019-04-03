@@ -8,5 +8,7 @@
     <?= $this->Form->control('spotify', ['label' => 'Lien vers son open spotif']) ?>
     <?= $this->Form->control('releaseyear', ['label' => 'Année de parution']) ?>
     <?= $this->Form->control('cover', ['type' => 'file', 'label' => 'Couverture']) ?>
-    <?= $this->Form->button('Ajouter') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>

@@ -5,7 +5,20 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Album : <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span></h1>
+<h1>Album : 
+    <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span>
+    <?php if($auth->user('status') === 'admin') { ?>
+        <span>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+            ['action' => 'edit', $album->id],
+            ['class' => 'button', 'escape' => false]) ?>
+            <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+            ['action' => 'delete', $album->id],
+            ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?', 'escape' => false, 'class' => 'button']) ?>
+        </span>
+    <?php } ?>
+</h1>
 <figure>
     <?php 
     // si on a l'image, on l'affiche; sinon, on met une image par défaut
@@ -14,18 +27,20 @@ echo '</pre>';  */
     <?php } else { ?>
         <!-- default.jpg se trouve dans webroot/img -->
         <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+    <?php } 
+    if($auth->user('status') === 'admin') { ?>
+        <figcaption>
+            <?= $this->HTML->link(
+            $this->HTML->image("../data/icons/edit_white.svg").'<span> Modifier</span>',
+            ['action' => 'editImage', $album->id],
+            ['class' => 'button', 'escape' => false]) ?>
+            <?php if (!empty($album->cover)) { ?>
+                <?= $this->Form->postLink($this->HTML->image("../data/icons/delete_white.svg").'<span> Supprimer</span>',
+                ['action' => 'deleteImage', $album->id],
+                ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?', 'escape' => false, 'class' => 'button']) ?>
+            <?php } ?>
+        </figcaption>
     <?php } ?>
-    <figcaption>
-        Photo de 
-        <?= $album->title;
-            if($auth->user('status') === 'admin') {
-                echo '<div class="button">'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $album->id]).'</div>';
-                if (!empty($album->cover)) {
-                    echo '<div class="button">'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</div>';
-                }
-            }
-        ?>
-    </figcaption>
 </figure>
 <p>
     <span class="label">Genre :</span>
@@ -49,11 +64,4 @@ echo '</pre>';  */
     ?>
     <iframe src="<?= $src ?>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-<p>id #<?= $album->id ?></p>
 
-<?php
-    if($auth->user('status') === 'admin') {
-        echo '<div class="button">'.$this->HTML->link('Editer', ['action' => 'edit', $album->id]).'</div>';
-        echo '<div class="button">'.$this->Form->postLink('Supprimer', ['action' => 'delete', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?']).'</div>';
-    }
-?>

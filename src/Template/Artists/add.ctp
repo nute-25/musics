@@ -8,5 +8,7 @@
     <?= $this->Form->control('country', ['label' => 'Pays d\'origine']) ?>
     <?= $this->Form->control('spotify', ['label' => 'Lien vers son open spotify']) ?>
     <?= $this->Form->control('picture', ['type' => 'file', 'label' => 'Photo']) ?>
-    <?= $this->Form->button('Ajouter') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>

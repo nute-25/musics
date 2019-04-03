@@ -8,5 +8,7 @@
     <?= $this->Form->control('debut', ['label' => 'Début d\'activité']) ?>
     <?= $this->Form->control('country', ['label' => 'Pays d\'origine']) ?>
     <?= $this->Form->control('spotify', ['label' => 'Lien vers son open spotify']) ?>
-    <?= $this->Form->button('Editer') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>

@@ -18,7 +18,10 @@ echo '</pre>'; */
 
 
 <?php if($auth->user('status') === 'admin') { ?>
-    <?= '<div class="button">'.$this->HTML->link('Ajouter un artiste', ['action' => 'add']).'</div>' ?>
+    <?= $this->HTML->link(
+        $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
+        ['action' => 'add'],
+        ['class' => 'button', 'escape' => false]) ?>
 <?php } ?>
 
 

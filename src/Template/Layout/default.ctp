@@ -14,6 +14,8 @@ $cakeDescription = 'Plateforme de musiques';
 
     <?= $this->Html->css('reset.css') ?>
     <?= $this->Html->css('main.css') ?>
+    <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js') ?>
+    <?= $this->Html->script('script.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
