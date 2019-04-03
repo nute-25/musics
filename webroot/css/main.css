@@ -78,7 +78,7 @@ main h1 > div:first-child a {
 main h1 span {
     text-transform: capitalize;
 }
-main h1 a.button {
+main h1 a.button, main h2 a.button {
     max-height: 42px;
     padding: 10px;
     font-size: 16px;
@@ -95,6 +95,10 @@ main h2 {
 }
 h2.pointer {
     cursor: pointer;
+}
+h2 {
+    display: flex;
+    justify-content: space-between;
 }
 form {
     width: 50%;

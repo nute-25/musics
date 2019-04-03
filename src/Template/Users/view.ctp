@@ -6,13 +6,18 @@ echo '</pre>'; */
 
 
 
-<h1>Utilisateur</h1>
-<p><?= $user->pseudo ?></p>
+<h1>
+    <div>
+        Utilisateur : 
+        <span><?= $user->pseudo ?></span>
+    </div>
+    <div></div>
+</h1>
 
 
 <h2>Favoris :</h2>
 <?php if(empty($user->bookmarks))
-    echo '<p>Vous n\'avez pas de favori</p>';
+    echo '<p>Aucun favori</p>';
 else { ?>
     <div class="container_list">
         <div class="list">

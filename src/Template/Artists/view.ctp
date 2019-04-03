@@ -99,35 +99,39 @@ echo '</pre>';  */
     ?>
     <iframe src="<?= $src ?>" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
-<p>
-    <span class="label">Liste de ses albums :</span>
+
+<h2>Liste de ses albums :
     <?php if($auth->user('status') === 'admin') { ?>
         <?= $this->HTML->link(
         $this->HTML->image("../data/icons/add_white.svg").'<span> Ajouter</span>',
         ['controller' => 'albums', 'action' => 'add', $artist->id],
         ['class' => 'button', 'escape' => false]) ?>
     <?php } ?>
-    <?php if(empty($artist->albums))
-        echo '<p>Il n\'y a pas d\'albums disponibles pour cet artiste</p>';
-    else { ?>
-        <table>
-            <tr>
-                <th>Titre</th>
-                <th>Date de sortie</th>
-                <th>Genre</th>
-                <th>Spotify</th>
-            </tr>
+</h2>
+<?php if(empty($artist->albums))
+    echo '<p>Il n\'y a pas d\'albums disponibles pour cet artiste</p>';
+else { ?>
+    <div class="container_list">
+        <div class="list">
             <?php foreach($artist->albums as $key => $value) : ?>
-                <tr>
-                    <td><?= $this->Html->link($value->title, ['controller' => 'albums', 'action' => 'view', $value->id]) ?></td>
-                    <td><?= $value->releaseyear ?></td>
-                    <td><?= $value->style ?></td>
-                    <td><a href='<?= $value->spotify ?>'>--> voir</a></td>
-                </tr>
+                <figure>
+                    <?php if (!empty($value->cover)) { ?>
+                        <?= $this->HTML->image('../data/covers/'.$value->cover, ['alt' => 'couverture de '.$value->title]) ?>
+                    <?php } else { ?>
+                        <!-- default.jpg se trouve dans webroot/img -->
+                        <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+                    <?php } ?>
+                    <figcaption> 
+                        <?= $this->Html->link($value->title, ['controller' => 'albums', 'action' => 'view', $value->id]) ?>
+                    </figcaption>
+                </figure>
             <?php endforeach; ?>
-        </table>
-    <?php } ?>
-</p>
+        </div>
+    </div>
+<?php } ?>
+
+
+
 
 
 
