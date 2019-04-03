@@ -1,9 +1,8 @@
 <?php 
 ?>
-
+<h1>Modification de la couverture de : <?= $album->title ?></h1>
 <!-- Form est un helper comme Htlm-->
 <?= $this->Form->create($album, ['enctype' => 'multipart/form-data']) ?>
-    <h1>Modification de la couverture de : <?= $album->title ?></h1>
     <?= $this->Form->control('cover', ['type' => 'file', 'label' => 'Affiche']) ?>
     <figure>
         <?php 

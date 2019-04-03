@@ -16,9 +16,11 @@ echo '</pre>'; */
     <?php } ?> 
 </p>
 
-<?php if($auth->user('status') === 'admin') { 
-    echo $this->HTML->link('Ajouter un artiste', ['action' => 'add']);
-}?>
+
+<?php if($auth->user('status') === 'admin') { ?>
+    <?= '<div class="button">'.$this->HTML->link('Ajouter un artiste', ['action' => 'add']).'</div>' ?>
+<?php } ?>
+
 
 <div class="container_list">
     <div class="list">

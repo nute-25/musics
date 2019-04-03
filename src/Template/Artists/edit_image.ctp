@@ -1,9 +1,8 @@
 <?php 
 ?>
-
+<h1>Modification de la photo de : <?= $artist->pseudonym ?></h1>
 <!-- Form est un helper comme Htlm-->
 <?= $this->Form->create($artist, ['enctype' => 'multipart/form-data']) ?>
-    <h1>Modification de la couverture de : <?= $artist->title ?></h1>
     <?= $this->Form->control('picture', ['type' => 'file', 'label' => 'Affiche']) ?>
     <figure>
         <?php 

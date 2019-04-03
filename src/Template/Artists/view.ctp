@@ -8,17 +8,22 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Artiste</h1>
-<p><?= $artist->pseudonym ?></p>
-<p><?= $bookmarks ?> utilisateur(s) a(ont) mis cet artiste en favori</p>
+<h1>Artiste : <span><?= $artist->pseudonym ?></span></h1>
+
+<p><?php if($bookmarks > 1) { ?>
+    <?= $bookmarks.' utilisateurs ont mis cet artiste en favori.' ?> 
+<?php } else { ?> 
+    <?= $bookmarks.' utilisateur a mis cet artiste en favori' ?></p>
+<?php } ?>
+
 <?php
     if($auth->user()) {
         if(!empty($bookmark)) {
-            echo '<p>'.$this->Form->postLink('Supprimer des favoris', ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?']).'</p>';
+            echo '<div class="button">'.$this->Form->postLink('Supprimer des favoris', ['controller' => 'bookmarks', 'action' => 'delete', $bookmark->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste de vos favoris ?']).'</div>';
             echo '<p>Favoris</p>';
         }
         else {
-            echo '<p>'.$this->HTML->link('Ajouter aux favoris', ['controller' => 'bookmarks', 'action' => 'add', $artist->id]).'</p>';
+            echo '<div class="button">'.$this->HTML->link('Ajouter aux favoris', ['controller' => 'bookmarks', 'action' => 'add', $artist->id]).'</div>';
         }
     }
 ?>
@@ -32,18 +37,15 @@ echo '</pre>';  */
         <!-- default.jpg se trouve dans webroot/img -->
         <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
     <?php } ?>
-    <figcaption>
-        Photo de 
-        <?= $artist->pseudonym;
-            if($auth->user('status') === 'admin') {
-                echo '<p>'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $artist->id]).'</p>';
-                if (!empty($artist->picture)) {
-                    echo '<p>'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</p>';
-                }
-            }
-        ?>
-    </figcaption>
 </figure>
+<?php
+    if($auth->user('status') === 'admin') {
+        echo '<div class="button">'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $artist->id]).'</div>';
+        if (!empty($artist->picture)) {
+            echo '<div class="button">'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</div>';
+        }
+    }
+?>
 <p>
     <span class="label">Début d'activité :</span>
     <?=  (!empty($artist->debut)) ? $artist->debut : '<span style="font-style:italic;">Inconnue</span>' ?>
@@ -94,20 +96,16 @@ echo '</pre>';  */
             <?php endforeach; ?>
         </table>
     <?php } ?>
-    <p>
-        <?php
-            if($auth->user('status') === 'admin') {
-                echo $this->HTML->link('Ajouter un album', ['controller' => 'albums', 'action' => 'add', $artist->id]);
-            }
-        ?>
-    </p>
+    <?php if($auth->user('status') === 'admin') { ?>
+        <?= '<div class="button">'.$this->HTML->link('Ajouter un album', ['controller' => 'albums', 'action' => 'add', $artist->id]).'</div>' ?>
+    <?php } ?>
 </p>
 
 
 <?php
     if($auth->user('status') === 'admin') {
-        echo '<p>'.$this->HTML->link('Editer', ['action' => 'edit', $artist->id]).'</p>';
-        echo '<p>'.$this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?']).'</p>';
+        echo '<div class="button">'.$this->HTML->link('Editer', ['action' => 'edit', $artist->id]).'</div>';
+        echo '<div class="button">'.$this->Form->postLink('Supprimer', ['action' => 'delete', $artist->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet artiste ?']).'</div>';
     }
 ?>
 

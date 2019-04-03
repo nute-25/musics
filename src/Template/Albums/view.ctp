@@ -5,8 +5,7 @@ echo '</pre>';  */
 ?>
 
 
-<h1>Album</h1>
-<p><?= $album->title .' de '. $album->artist->pseudonym?></p>
+<h1>Album : <span><?= $album->title .'<span class="lowercase"> de <span>'. $album->artist->pseudonym?></span></h1>
 <figure>
     <?php 
     // si on a l'image, on l'affiche; sinon, on met une image par défaut
@@ -20,9 +19,9 @@ echo '</pre>';  */
         Photo de 
         <?= $album->title;
             if($auth->user('status') === 'admin') {
-                echo '<p>'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $album->id]).'</p>';
+                echo '<div class="button">'.$this->HTML->link('Modifier la photo', ['action' => 'editImage', $album->id]).'</div>';
                 if (!empty($album->cover)) {
-                    echo '<p>'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</p>';
+                    echo '<div class="button">'.$this->Form->postLink('Supprimer la photo', ['action' => 'deleteImage', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer ce cover ?']).'</div>';
                 }
             }
         ?>
@@ -54,7 +53,7 @@ echo '</pre>';  */
 
 <?php
     if($auth->user('status') === 'admin') {
-        echo '<p>'.$this->HTML->link('Editer', ['action' => 'edit', $album->id]).'</p>';
-        echo '<p>'.$this->Form->postLink('Supprimer', ['action' => 'delete', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?']).'</p>';
+        echo '<div class="button">'.$this->HTML->link('Editer', ['action' => 'edit', $album->id]).'</div>';
+        echo '<div class="button">'.$this->Form->postLink('Supprimer', ['action' => 'delete', $album->id], ['confirm' => 'Etes-vous sûr de vouloir supprimer cet album ?']).'</div>';
     }
 ?>

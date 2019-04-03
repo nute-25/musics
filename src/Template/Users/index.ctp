@@ -5,7 +5,7 @@
 ?>
 
 <p>Il y a <?= $u->count() ?> utilisateur(s)</p>
-<p><?= $this->HTML->link('Ajouter un utilisateur', ['action' => 'add']) ?></p>
+<div class="button"><?= $this->HTML->link('Ajouter un utilisateur', ['action' => 'add']) ?></div>
 
 <table>
     <tr>

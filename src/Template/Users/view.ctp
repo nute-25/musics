@@ -10,53 +10,68 @@ echo '</pre>'; */
 <p><?= $user->pseudo ?></p>
 
 
-<span class="label">Favoris :</span>
+<h2>Favoris :</h2>
 <?php if(empty($user->bookmarks))
     echo '<p>Vous n\'avez pas de favori</p>';
 else { ?>
-    <table>
-        <tr>
-            <th>Nom de l'artiste</th>
-            <th>Spotify</th>
-        </tr>
-        <?php foreach($user->bookmarks as $key => $value) : ?>
-            <tr>
-                <td><?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->artist->id]) ?></td>
-                <td><a href='<?= $value->artist->spotify ?>'>--> voir</a></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
+    <div class="container_list">
+        <div class="list">
+            <?php foreach($user->bookmarks as $key => $value) : ?>
+                <figure>
+                    <?php if (!empty($value->artist->picture)) { ?>
+                        <?= $this->HTML->image('../data/pictures/'.$value->artist->picture, ['alt' => 'photo de '.$value->artist->pseudonym]) ?>
+                    <?php } else { ?>
+                        <!-- default.jpg se trouve dans webroot/img -->
+                        <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+                    <?php } ?>
+                    <figcaption> 
+                        <?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->artist->id]) ?>
+                    </figcaption>
+                </figure>
+            <?php endforeach; ?>
+        </div>
+    </div>
 
 
     <?php if($auth->user('id') && $user->id !== $auth->user('id')) { ?>
 
-        <span class="label">Vos favoris en commun :</span>
-        <table>
-            <tr>
-                <th>Nom de l'artiste</th>
-                <th>Spotify</th>
-            </tr>
-            <?php foreach($communbookmarks as $key => $value) : ?>
-                <tr>
-                    <td><?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->id]) ?></td>
-                    <td><a href='<?= $value->artist->spotify ?>'>--> voir</a></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
+        <h2>Vos favoris en commun :</h2>
+        <div class="container_list">
+            <div class="list">
+                <?php foreach($communbookmarks as $key => $value) : ?>
+                    <figure>
+                        <?php if (!empty($value->artist->picture)) { ?>
+                            <?= $this->HTML->image('../data/pictures/'.$value->artist->picture, ['alt' => 'photo de '.$value->artist->pseudonym]) ?>
+                        <?php } else { ?>
+                            <!-- default.jpg se trouve dans webroot/img -->
+                            <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+                        <?php } ?>
+                        <figcaption> 
+                            <?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->artist->id]) ?>
+                        </figcaption>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+        </div>
 
-        <span class="label">Vous pourriez aimer :</span>
-        <table>
-            <tr>
-                <th>Nom de l'artiste</th>
-                <th>Spotify</th>
-            </tr>
-            <?php foreach($differentbookmarks as $key => $value) : ?>
-                <tr>
-                    <td><?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->id]) ?></td>
-                    <td><a href='<?= $value->artist->spotify ?>'>--> voir</a></td>
-                </tr>
-            <?php endforeach; ?>
-        </table>
+        <h2>Vous pourriez aimer :</h2>
+        <div class="container_list">
+            <div class="list">
+                <?php foreach($differentbookmarks as $key => $value) : ?>
+                    <figure>
+                        <?php if (!empty($value->artist->picture)) { ?>
+                            <?= $this->HTML->image('../data/pictures/'.$value->artist->picture, ['alt' => 'photo de '.$value->artist->pseudonym]) ?>
+                        <?php } else { ?>
+                            <!-- default.jpg se trouve dans webroot/img -->
+                            <?= $this->HTML->image('default.jpg', ['alt' => 'Visuel non disponible' ]) ?>
+                        <?php } ?>
+                        <figcaption> 
+                            <?= $this->Html->link($value->artist->pseudonym, ['controller' => 'artists', 'action' => 'view', $value->artist->id]) ?>
+                        </figcaption>
+                    </figure>
+                <?php endforeach; ?>
+            </div>
+        </div>
     <?php } ?>
 
 <?php } ?>
