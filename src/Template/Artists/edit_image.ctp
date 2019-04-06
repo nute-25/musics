@@ -15,5 +15,7 @@
         <figcaption>Image actuelle</figcaption>
     </figure>
     <?= $this->Form->control('picture', ['type' => 'file', 'label' => 'Sélectionner une nouvelle photo :']) ?>
-    <?= $this->Form->button('Envoyer') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/send_white.svg").'<span> Envoyer</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>

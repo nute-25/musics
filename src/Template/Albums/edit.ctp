@@ -8,5 +8,7 @@
     <?= $this->Form->control('style', ['label' => 'Genre']) ?>
     <?= $this->Form->control('spotify', ['label' => 'Lien vers son open spotif']) ?>
     <?= $this->Form->control('releaseyear', ['label' => 'Année de parution']) ?>
-    <?= $this->Form->button('Editer') ?>
+    <?= $this->Form->button(
+        $this->HTML->image("../data/icons/edit_white.svg").'<span> Editer</span>',
+        ['class' => 'button', 'escape' => false]) ?>
 <?= $this->Form->end() ?>
